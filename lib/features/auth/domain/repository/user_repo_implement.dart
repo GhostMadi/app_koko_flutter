@@ -7,10 +7,11 @@ import 'package:flutter_application_2/features/auth/data/repository/user_repo.da
 import 'package:flutter_application_2/features/auth/domain/enitites/user_entity.dart';
 
 class FirbaseRepository implements UserRepository {
-  FirebaseAuth auth;
   FirbaseRepository({FirebaseAuth? firebaseAuth})
       : auth = firebaseAuth ?? FirebaseAuth.instance;
+
   final userCollection = FirebaseFirestore.instance.collection('Users');
+  final FirebaseAuth auth;
 
   @override
   Stream<User?> get user {

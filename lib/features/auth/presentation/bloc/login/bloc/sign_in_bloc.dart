@@ -23,11 +23,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       }
     });
     on<SignOutRequired>((event, emit) async {
-      try {
-        await userRepository.signOut();
-      } catch (e) {
-        log(e.toString());
-      }
+      await userRepository.signOut();
     });
   }
 }

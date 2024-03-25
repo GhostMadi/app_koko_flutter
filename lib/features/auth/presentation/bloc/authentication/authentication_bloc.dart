@@ -8,16 +8,16 @@ part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  UserRepository userRepository;
-  StreamSubscription<User?>? userSubscription;
+  final UserRepository userRepository;
+  late StreamSubscription<User?> userSubscription;
   AuthenticationBloc({required UserRepository myUserRepository})
       : userRepository = myUserRepository,
         super(const AuthenticationState.unknown()) {
-    userSubscription = userRepository.user.listen((event) {
-      add(AuthenticationChanges(event));
+    userSubscription = userRepository.user.listen((authUser) {
+      add(AuthenticationChanges(authUser));
     });
 
-    on<AuthenticationChanges>((event, emit) {
+    on<AuthenticationChanges>((AuthenticationChanges event, emit) {
       if (event.user != null) {
         emit(AuthenticationState.authenticated(event.user!));
       } else {
@@ -27,7 +27,7 @@ class AuthenticationBloc
   }
   @override
   Future<void> close() {
-    userSubscription?.cancel();
+    userSubscription.cancel();
     return super.close();
   }
 }

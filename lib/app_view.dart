@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/features/app/presentation/home_page/pages/home_page/home_page.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/login/bloc/sign_in_bloc.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/login/login_page.dart';
@@ -22,10 +23,12 @@ class AppView extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
         if (state.status == AuthStatus.authenticated) {
-          return BlocProvider(
-              create: (context) => SignInBloc(
-                  myUserRepo:
-                      (context).read<AuthenticationBloc>().userRepository));
+          return BlocProvider<SignInBloc>(
+            create: (context) => SignInBloc(
+                myUserRepo:
+                    (context).read<AuthenticationBloc>().userRepository),
+            child: const HomePage(),
+          );
         } else {
           return BlocProvider(
             create: (context) => SignInBloc(
