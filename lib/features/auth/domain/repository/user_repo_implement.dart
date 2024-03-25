@@ -25,8 +25,19 @@ class FirbaseRepository implements UserRepository {
     try {
       UserCredential user = await auth.createUserWithEmailAndPassword(
           email: myUser.gmail, password: password);
+
       myUser = myUser.copyWith(userId: user.user!.uid);
       return myUser;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> setUserData(MyUser user) async {
+    try {
+      await userCollection.doc(user.userId).set(user.toEntity().toDocument());
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -58,7 +69,7 @@ class FirbaseRepository implements UserRepository {
     try {
       await auth.signOut();
     } catch (e) {
-      log(e.toString());
+      log('failed signOut:${e.toString()}');
       rethrow;
     }
   }
@@ -69,16 +80,6 @@ class FirbaseRepository implements UserRepository {
       final MyUser user = await userCollection.doc(userId).get().then((value) =>
           MyUser.fromEntity(MyUserEntity.fromDocument(value.data()!)));
       return user;
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
-  }
-
-  @override
-  Future<void> setUserData(MyUser user) async {
-    try {
-      await userCollection.doc(user.userId).set(user.toEntity().toDocument());
     } catch (e) {
       log(e.toString());
       rethrow;
