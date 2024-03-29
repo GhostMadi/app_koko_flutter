@@ -1,6 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/features/auth/data/models/user.dart';
+import 'package:flutter_application_2/features/auth/presentation/bloc/signUp/bloc/sign_up_bloc.dart';
+import 'package:flutter_application_2/features/auth/presentation/pages/login/login_page.dart';
+import 'package:flutter_application_2/features/auth/presentation/pages/section_2/gpa.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/section_2/majore.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/section_2/school.dart';
+import 'package:flutter_application_2/features/auth/presentation/widgets/custom_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SectionTwo extends StatefulWidget {
   final String gmail;
@@ -23,6 +31,8 @@ class SectionTwo extends StatefulWidget {
 
 final keyState = GlobalKey<FormState>();
 String schoolController = '';
+String majoreController = '';
+String gpaController = '';
 
 class _SectionTwoState extends State<SectionTwo> {
   @override
@@ -37,23 +47,73 @@ class _SectionTwoState extends State<SectionTwo> {
           color: Colors.white,
         ),
       ),
-      body: Form(
-          key: keyState,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SchoolSelect(callName: (school) {
+      body: BlocListener<SignUpBloc, SignUpState>(
+        listener: (context, state) {
+          if (state is SignUpSuccess) {
+            Navigator.push(context,
+                CupertinoPageRoute(builder: (context) => const LoginPage()));
+          } else {
+            return;
+          }
+        },
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SchoolSelect(callName: (school) {
+                  setState(() {
                     schoolController = school;
-                  }),
-                  const SizedBox(height: 15),
-                  MajoresSelect(school: schoolController)
-                ],
-              ),
+                  });
+                }),
+                const SizedBox(height: 15),
+                MajoresSelect(
+                    callName: (majore) {
+                      setState(() {
+                        majoreController = majore;
+                      });
+                    },
+                    school:
+                        schoolController.isEmpty ? "ISE" : schoolController),
+                const SizedBox(height: 15),
+                GpaWidget(callName: (gpa) {
+                  gpaController = gpa.toString();
+                }),
+                const SizedBox(height: 20),
+                CustomButton(
+                    buttonText: 'press',
+                    onTap: () {
+                      if (schoolController.isNotEmpty &&
+                          gpaController.isNotEmpty &&
+                          majoreController.isNotEmpty) {
+                        try {
+                          MyUser myUser = MyUser.empty;
+                          myUser = myUser.copyWith(
+                            gmail: widget.gmail,
+                            name: widget.name,
+                            age: widget.age,
+                            gender: widget.gender,
+                            school: schoolController,
+                            majore: majoreController,
+                            gpa: gpaController,
+                          );
+                          setState(() {
+                            context
+                                .read<SignUpBloc>()
+                                .add(SignUpUser(myUser, widget.password));
+                          });
+                        } on FirebaseException catch (e) {
+                          if (e == 'email-already-in-use') ;
+                          print('jqweeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+                        }
+                      }
+                    })
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

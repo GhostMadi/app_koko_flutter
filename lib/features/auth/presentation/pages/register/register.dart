@@ -35,12 +35,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   const Text('CoCo', style: TextStyle(fontSize: 45)),
                   CustomTextField(
                     controller: emailController,
-                    hintText: 'email',
+                    labelText: 'email',
                     obsecure: false,
                     keyBoardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'fill the field';
+                        return 'error';
                       } else if (!emailRegExp.hasMatch(value)) {
                         return "enter the correct email";
                       }
@@ -50,12 +50,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 15),
                   CustomTextField(
                     controller: passwordController,
-                    hintText: 'password',
+                    labelText: 'password',
                     obsecure: true,
                     keyBoardType: TextInputType.text,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'fill the field';
+                        return 'error';
                       } else if (value.length < 6) {
                         return "at least 6 characters";
                       }
@@ -65,12 +65,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 15),
                   CustomTextField(
                     controller: confirmPasswordController,
-                    hintText: 'confirm password',
+                    labelText: 'confirm password',
                     obsecure: true,
                     keyBoardType: TextInputType.text,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'fill the field';
+                        return 'error';
                       } else if (value.length < 6) {
                         return "at least 6 characters";
                       } else if (value != passwordController.text) {

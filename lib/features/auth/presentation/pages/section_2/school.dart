@@ -9,7 +9,7 @@ class SchoolSelect extends StatefulWidget {
 }
 
 class _SchoolSelectState extends State<SchoolSelect> {
-  final List<String> schools = ['ISE', 'KLS', 'ISG', 'SLA'];
+  final List<String> schools = ['ISE', 'HSL', 'HSH', 'ISJ'];
   String selected = '';
 
   @override
@@ -22,6 +22,7 @@ class _SchoolSelectState extends State<SchoolSelect> {
           scrollDirection: Axis.horizontal,
           itemCount: schools.length,
           itemBuilder: (context, index) {
+            selected = schools[0];
             return GestureDetector(
               onTap: () {
                 setState(() {

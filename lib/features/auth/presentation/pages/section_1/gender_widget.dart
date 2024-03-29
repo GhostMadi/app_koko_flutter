@@ -10,7 +10,7 @@ class GenderSelect extends StatefulWidget {
 
 class _GenderSelectState extends State<GenderSelect> {
   final List<String> genders = ['Male', 'Femal'];
-  String selected = '';
+  String selected = " ";
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,7 @@ class _GenderSelectState extends State<GenderSelect> {
           scrollDirection: Axis.horizontal,
           itemCount: genders.length,
           itemBuilder: (context, index) {
+            selected = genders[0];
             return GestureDetector(
               onTap: () {
                 setState(() {

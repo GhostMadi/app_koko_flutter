@@ -21,6 +21,7 @@ final keyForm = GlobalKey<FormState>();
 final emailController = TextEditingController();
 final passwordController = TextEditingController();
 bool isRequired = false;
+bool errorComment = false;
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -57,14 +58,14 @@ class _LoginPageState extends State<LoginPage> {
                     const Text('CoCo', style: TextStyle(fontSize: 45)),
                     CustomTextField(
                       controller: emailController,
-                      hintText: 'email',
+                      labelText: 'email',
                       obsecure: false,
                       keyBoardType: TextInputType.emailAddress,
                       validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'fill the field';
-                        } else if (!emailRegExp.hasMatch(value)) {
-                          return "enter the a valid email";
+                        if (value!.isEmpty &&
+                            !emailRegExp.hasMatch(value) &&
+                            errorComment) {
+                          return 'error';
                         }
                         return null;
                       },
@@ -72,12 +73,12 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 15),
                     CustomTextField(
                       controller: passwordController,
-                      hintText: 'password',
+                      labelText: 'password',
                       obsecure: true,
                       keyBoardType: TextInputType.text,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'fill the field';
+                          return 'error';
                         } else if (value.length < 6) {
                           return "at least 6 characters";
                         }
@@ -90,12 +91,16 @@ class _LoginPageState extends State<LoginPage> {
                             buttonText: 'sign up',
                             onTap: () {
                               if (keyForm.currentState!.validate()) {
-                                context.read<SignInBloc>().add(
-                                      SignInRequired(
-                                          email: emailController.text.trim(),
-                                          password:
-                                              passwordController.text.trim()),
-                                    );
+                                try {
+                                  context.read<SignInBloc>().add(
+                                        SignInRequired(
+                                            email: emailController.text.trim(),
+                                            password:
+                                                passwordController.text.trim()),
+                                      );
+                                } catch (e) {
+                                  errorComment = true;
+                                }
                               }
                             })
                         : const CircularProgressIndicator(),

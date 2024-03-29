@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/features/auth/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:flutter_application_2/features/auth/presentation/bloc/signUp/bloc/sign_up_bloc.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/section_1/gender_widget.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/section_2/section_two.dart';
 import 'package:flutter_application_2/features/auth/presentation/widgets/custom_button.dart';
 import 'package:flutter_application_2/features/auth/presentation/widgets/ftext_field_custome.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SectionOne extends StatefulWidget {
   final String gmail;
@@ -44,12 +47,12 @@ class _SectionOneState extends State<SectionOne> {
                 children: [
                   CustomTextField(
                     controller: nameController,
-                    hintText: 'name',
+                    labelText: 'name',
                     obsecure: false,
                     keyBoardType: TextInputType.name,
                     validator: (name) {
                       if (name!.isEmpty) {
-                        return "fill the field";
+                        return "error";
                       }
                       return null;
                     },
@@ -57,12 +60,12 @@ class _SectionOneState extends State<SectionOne> {
                   const SizedBox(height: 15),
                   CustomTextField(
                     controller: ageController,
-                    hintText: 'age',
+                    labelText: 'age',
                     obsecure: false,
                     keyBoardType: TextInputType.number,
                     validator: (age) {
                       if (age!.isEmpty) {
-                        return "fill the field";
+                        return "error";
                       }
                       return null;
                     },
@@ -79,16 +82,23 @@ class _SectionOneState extends State<SectionOne> {
                   CustomButton(
                       buttonText: "next",
                       onTap: () {
-                        if (keyState.currentState!.validate() == true) {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => SectionTwo(
-                                      age: ageController.text,
-                                      gmail: widget.gmail,
-                                      password: widget.password,
-                                      name: nameController.text,
-                                      gender: genderController)));
+                        if (keyState.currentState!.validate() == true &&
+                            genderController.isNotEmpty) {
+                          Navigator.push(context,
+                              CupertinoPageRoute(builder: (context) {
+                            return BlocProvider(
+                              create: (context) => SignUpBloc(
+                                  myUserRepo: context
+                                      .read<AuthenticationBloc>()
+                                      .userRepository),
+                              child: SectionTwo(
+                                  age: ageController.text,
+                                  gmail: widget.gmail,
+                                  password: widget.password,
+                                  name: nameController.text,
+                                  gender: genderController),
+                            );
+                          }));
                         }
                       })
                 ],

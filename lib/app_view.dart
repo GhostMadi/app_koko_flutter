@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/features/app/presentation/home_page/pages/home_page/home_page.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/login/bloc/sign_in_bloc.dart';
+import 'package:flutter_application_2/features/auth/presentation/bloc/signUp/bloc/sign_up_bloc.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/login/login_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,9 +31,19 @@ class AppView extends StatelessWidget {
             child: const HomePage(),
           );
         } else {
-          return BlocProvider(
-            create: (context) => SignInBloc(
-                myUserRepo: context.read<AuthenticationBloc>().userRepository),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => SignInBloc(
+                    myUserRepo:
+                        context.read<AuthenticationBloc>().userRepository),
+              ),
+              BlocProvider(
+                create: (context) => SignUpBloc(
+                    myUserRepo:
+                        context.read<AuthenticationBloc>().userRepository),
+              ),
+            ],
             child: const LoginPage(),
           );
         }

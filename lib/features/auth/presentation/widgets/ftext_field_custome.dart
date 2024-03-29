@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
-  final String hintText;
+  final String labelText;
   final bool obsecure;
   final TextInputType keyBoardType;
   final VoidCallback? onTap;
@@ -11,7 +11,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? onChanges;
   const CustomTextField(
       {required this.controller,
-      required this.hintText,
+      required this.labelText,
       required this.obsecure,
       required this.keyBoardType,
       this.errorMsg,
@@ -22,26 +22,26 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height / 12,
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black, width: 3),
-          borderRadius: BorderRadius.circular(20)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextFormField(
-          validator: validator,
-          controller: controller,
-          obscureText: obsecure,
-          keyboardType: keyBoardType,
-          onTap: onTap,
-          onChanged: onChanges,
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              errorText: errorMsg,
-              hintText: hintText),
-        ),
+    return TextFormField(
+      validator: validator,
+      controller: controller,
+      obscureText: obsecure,
+      keyboardType: keyBoardType,
+      onTap: onTap,
+      onChanged: onChanges,
+      decoration: InputDecoration(
+        prefixText: '   ',
+        labelText: labelText,
+        labelStyle: const TextStyle(color: Colors.black),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: const BorderSide(color: Colors.black, width: 2)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: const BorderSide(color: Colors.black, width: 3)),
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: const BorderSide(color: Colors.black, width: 3)),
       ),
     );
   }
