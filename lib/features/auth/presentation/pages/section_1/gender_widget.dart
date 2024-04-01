@@ -22,7 +22,6 @@ class _GenderSelectState extends State<GenderSelect> {
           scrollDirection: Axis.horizontal,
           itemCount: genders.length,
           itemBuilder: (context, index) {
-            selected = genders[0];
             return GestureDetector(
               onTap: () {
                 setState(() {
@@ -34,17 +33,18 @@ class _GenderSelectState extends State<GenderSelect> {
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: Container(
                   height: size.height / 12,
-                  width: size.width / 2.5,
+                  width: size.width / 2.3,
                   decoration: BoxDecoration(
                       color: selected == genders[index]
                           ? Colors.white
                           : Colors.black,
                       border: Border.all(color: Colors.black, width: 3),
-                      borderRadius: BorderRadius.circular(20)),
+                      borderRadius: BorderRadius.circular(11)),
                   child: Center(
                     child: Text(
                       genders[index],
                       style: TextStyle(
+                          fontFamily: 'RoboStyle',
                           color: selected == genders[index]
                               ? Colors.black
                               : Colors.white),

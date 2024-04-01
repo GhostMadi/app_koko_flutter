@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/constants/regexp.dart';
-import 'package:flutter_application_2/features/app/presentation/home_page/pages/home_page/home_page.dart';
+import 'package:flutter_application_2/constants/text_style.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/login/bloc/sign_in_bloc.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/signUp/bloc/sign_up_bloc.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/register/register.dart';
+import 'package:flutter_application_2/features/auth/presentation/widgets/circle.dart';
 import 'package:flutter_application_2/features/auth/presentation/widgets/custom_button.dart';
 import 'package:flutter_application_2/features/auth/presentation/widgets/ftext_field_custome.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,7 @@ final emailController = TextEditingController();
 final passwordController = TextEditingController();
 bool isRequired = false;
 bool errorComment = false;
+bool signUpFailure = true;
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -33,11 +35,11 @@ class _LoginPageState extends State<LoginPage> {
           if (state is SignInSuccess) {
             setState(() {
               isRequired = false;
-              Navigator.push(context,
-                  CupertinoPageRoute(builder: (context) => const HomePage()));
             });
           } else if (state is SignInFailure) {
             setState(() {
+              signUpFailure = false;
+              passwordController.clear();
               isRequired = false;
             });
           } else if (state is SignInProcess) {
@@ -55,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('CoCo', style: TextStyle(fontSize: 45)),
+                    Text('CoCo', style: customIconStyle),
                     CustomTextField(
                       controller: emailController,
                       labelText: 'email',
@@ -65,6 +67,8 @@ class _LoginPageState extends State<LoginPage> {
                         if (value!.isEmpty &&
                             !emailRegExp.hasMatch(value) &&
                             errorComment) {
+                          return 'error';
+                        } else if (!signUpFailure) {
                           return 'error';
                         }
                         return null;
@@ -81,6 +85,8 @@ class _LoginPageState extends State<LoginPage> {
                           return 'error';
                         } else if (value.length < 6) {
                           return "at least 6 characters";
+                        } else if (!signUpFailure) {
+                          return 'error';
                         }
                         return null;
                       },
@@ -88,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 20),
                     !isRequired
                         ? CustomButton(
-                            buttonText: 'sign up',
+                            buttonText: 'sign In',
                             onTap: () {
                               if (keyForm.currentState!.validate()) {
                                 try {
@@ -103,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                               }
                             })
-                        : const CircularProgressIndicator(),
+                        : const CircleCustome(),
                     const SizedBox(height: 20),
                     GestureDetector(
                         onTap: () {
@@ -119,7 +125,11 @@ class _LoginPageState extends State<LoginPage> {
                                         child: const RegisterPage(),
                                       )));
                         },
-                        child: const Text('Sign up'))
+                        child: const Text(
+                          'Sign up?',
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: 'RoboStyle'),
+                        )),
                   ],
                 ),
               ),

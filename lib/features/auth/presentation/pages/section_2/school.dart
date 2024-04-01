@@ -22,7 +22,6 @@ class _SchoolSelectState extends State<SchoolSelect> {
           scrollDirection: Axis.horizontal,
           itemCount: schools.length,
           itemBuilder: (context, index) {
-            selected = schools[0];
             return GestureDetector(
               onTap: () {
                 setState(() {
@@ -39,8 +38,7 @@ class _SchoolSelectState extends State<SchoolSelect> {
                       color: selected == schools[index]
                           ? Colors.white
                           : Colors.black,
-                      border: Border.all(color: Colors.black, width: 3),
-                      borderRadius: BorderRadius.circular(20)),
+                      borderRadius: BorderRadius.circular(11)),
                   child: Center(
                     child: Text(
                       schools[index],

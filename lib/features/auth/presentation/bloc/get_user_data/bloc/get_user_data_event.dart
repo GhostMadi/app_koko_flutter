@@ -1,16 +1,10 @@
 part of 'get_user_data_bloc.dart';
 
-abstract class GetUserDataEvent extends Equatable {
+abstract class GetUserDataEvent {
   const GetUserDataEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class GetUserData extends GetUserDataEvent {
-  final String userId;
-  const GetUserData({required this.userId});
-
-  @override
-  List<Object> get props => [userId];
+  final String myUserId;
+  const GetUserData({required this.myUserId});
 }

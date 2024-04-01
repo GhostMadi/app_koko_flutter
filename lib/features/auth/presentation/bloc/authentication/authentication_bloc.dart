@@ -12,7 +12,7 @@ class AuthenticationBloc
   late StreamSubscription<User?> userSubscription;
   AuthenticationBloc({required UserRepository myUserRepository})
       : userRepository = myUserRepository,
-        super(const AuthenticationState.unknown()) {
+        super(AuthenticationState.unknown()) {
     userSubscription = userRepository.user.listen((authUser) {
       add(AuthenticationChanges(authUser));
     });
@@ -21,7 +21,7 @@ class AuthenticationBloc
       if (event.user != null) {
         emit(AuthenticationState.authenticated(event.user!));
       } else {
-        emit(const AuthenticationState.unAuthenticated());
+        emit(AuthenticationState.unAuthenticated());
       }
     });
   }

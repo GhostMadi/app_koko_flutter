@@ -15,10 +15,7 @@ class FirbaseRepository implements UserRepository {
 
   @override
   Stream<User?> get user {
-    return auth.authStateChanges().map((event) {
-      final user = event;
-      return user;
-    });
+    return auth.authStateChanges().map((event) => event);
   }
 
   @override
@@ -78,12 +75,22 @@ class FirbaseRepository implements UserRepository {
   @override
   Future<MyUser> getUserData(String userId) async {
     try {
-      final MyUser user = await userCollection.doc(userId).get().then((value) =>
+      final user = await userCollection.doc(userId).get().then((value) =>
           MyUser.fromEntity(MyUserEntity.fromDocument(value.data()!)));
       return user;
     } catch (e) {
       log(e.toString());
+
       rethrow;
+    }
+  }
+
+  @override
+  Future<void> currentUid() async {
+    try {
+      auth.currentUser!.uid;
+    } catch (e) {
+      log(e.toString());
     }
   }
 }

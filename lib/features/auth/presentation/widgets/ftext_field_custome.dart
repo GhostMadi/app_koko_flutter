@@ -23,6 +23,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: Colors.black,
       validator: validator,
       controller: controller,
       obscureText: obsecure,
@@ -30,18 +31,26 @@ class CustomTextField extends StatelessWidget {
       onTap: onTap,
       onChanged: onChanges,
       decoration: InputDecoration(
+        filled: true,
+        hintStyle: TextStyle(fontFamily: 'RoboStyle'),
+        fillColor: Colors.white,
         prefixText: '   ',
         labelText: labelText,
+        floatingLabelStyle:
+            const TextStyle(fontFamily: 'RoboStyle', color: Colors.black),
         labelStyle: const TextStyle(color: Colors.black),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 0.5)),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Colors.black, width: 2)),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 0.5)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Colors.black, width: 3)),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 0.5)),
         errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Colors.black, width: 3)),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 0.5)),
       ),
     );
   }

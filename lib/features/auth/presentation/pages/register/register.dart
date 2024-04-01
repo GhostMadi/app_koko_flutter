@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/constants/regexp.dart';
+import 'package:flutter_application_2/constants/text_style.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/login/login_page.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/section_1/section_one.dart';
+import 'package:flutter_application_2/features/auth/presentation/widgets/circle.dart';
 import 'package:flutter_application_2/features/auth/presentation/widgets/custom_button.dart';
 import 'package:flutter_application_2/features/auth/presentation/widgets/ftext_field_custome.dart';
 
@@ -32,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('CoCo', style: TextStyle(fontSize: 45)),
+                  Text('CoCo', style: customIconStyle),
                   CustomTextField(
                     controller: emailController,
                     labelText: 'email',
@@ -82,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 20),
                   !isRequired
                       ? CustomButton(
-                          buttonText: 'Sign Up',
+                          buttonText: 'sign Up',
                           onTap: () {
                             if (keyForm.currentState!.validate()) {
                               Navigator.push(
@@ -94,13 +96,15 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
                           },
                         )
-                      : const CircularProgressIndicator(),
+                      : const CircleCustome(),
                   const SizedBox(height: 20),
                   GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: const Text('Sign in'))
+                      child: const Text('sign in?',
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: 'RoboStyle')))
                 ],
               ),
             ),

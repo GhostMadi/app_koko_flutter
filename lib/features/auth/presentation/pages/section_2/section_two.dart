@@ -1,9 +1,9 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/features/auth/data/models/user.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/signUp/bloc/sign_up_bloc.dart';
-import 'package:flutter_application_2/features/auth/presentation/pages/login/login_page.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/section_2/gpa.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/section_2/majore.dart';
 import 'package:flutter_application_2/features/auth/presentation/pages/section_2/school.dart';
@@ -37,26 +37,26 @@ String gpaController = '';
 class _SectionTwoState extends State<SectionTwo> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios),
-          color: Colors.white,
+    return BlocListener<SignUpBloc, SignUpState>(
+      listener: (context, state) {
+        if (state is SignUpFailure) {
+          return;
+        } else if (state is SignUpSuccess) {
+        } else {
+          return;
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios),
+            color: Colors.white,
+          ),
         ),
-      ),
-      body: BlocListener<SignUpBloc, SignUpState>(
-        listener: (context, state) {
-          if (state is SignUpSuccess) {
-            Navigator.push(context,
-                CupertinoPageRoute(builder: (context) => const LoginPage()));
-          } else {
-            return;
-          }
-        },
-        child: Center(
+        body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -104,8 +104,7 @@ class _SectionTwoState extends State<SectionTwo> {
                                 .add(SignUpUser(myUser, widget.password));
                           });
                         } on FirebaseException catch (e) {
-                          if (e == 'email-already-in-use') ;
-                          print('jqweeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+                          log(e.toString());
                         }
                       }
                     })

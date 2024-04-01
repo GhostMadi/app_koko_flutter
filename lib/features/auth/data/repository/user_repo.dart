@@ -9,4 +9,5 @@ abstract class UserRepository {
   Future<void> resetPassword(String gmail);
   Future<void> setUserData(MyUser user);
   Future<MyUser> getUserData(String userId);
+  Future<void> currentUid();
 }

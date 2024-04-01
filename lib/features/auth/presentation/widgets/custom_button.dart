@@ -17,13 +17,14 @@ class _CustomButtonState extends State<CustomButton> {
     return Container(
       height: size.height / 11.5,
       decoration: BoxDecoration(
-          color: Colors.black, borderRadius: BorderRadius.circular(18)),
+          color: Colors.black, borderRadius: BorderRadius.circular(11)),
       child: GestureDetector(
         onTap: widget.onTap,
         child: Center(
           child: Text(
             ' ${widget.buttonText}',
-            style: const TextStyle(color: Colors.white, fontSize: 20),
+            style: const TextStyle(
+                color: Colors.white, fontSize: 20, fontFamily: "RoboStyle"),
           ),
         ),
       ),

@@ -12,21 +12,21 @@ class MajoresSelect extends StatefulWidget {
 
 Map<String, List<String>> majores = {
   'ISE': [
-    'finance',
-    'accounting',
-    'economics and data science',
-    'marketing',
+    'Finance',
+    'Accounting',
+    'Economics and data science',
+    'Marketing',
     'IT in bussines',
     'International Relations',
     'Concentrations',
     'HR management',
-    'supply chain mangement',
-    'entrepreneurship'
+    'Supply chain mangement',
+    'Entrepreneurship'
   ],
-  'HSL': ['international law', 'jurisprudence', 'rights and law enforcement'],
+  'HSL': ['International law', 'Jurisprudence', 'Rights and Law Enforcement'],
   'HSH': [
-    'translation business',
-    'applied linguistics',
+    'Translation Business',
+    'Applied Linguistics',
     'hospitality',
     'tourism',
     'linguistics',
@@ -61,8 +61,8 @@ class _MajoresSelectState extends State<MajoresSelect> {
                 child: Container(
                   height: size.height / 12,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 2),
-                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.circular(11),
                       color: selected == majore[index]
                           ? Colors.white
                           : Colors.black),
