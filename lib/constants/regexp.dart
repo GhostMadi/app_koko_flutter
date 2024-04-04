@@ -1,1 +1,1 @@
-RegExp emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+RegExp emailRegExp = RegExp(r'^[\w-\.]+@gmail\.com$');

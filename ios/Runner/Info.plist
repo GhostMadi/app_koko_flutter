@@ -45,5 +45,13 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need to access to retrieve  photos of youre establishment</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Need to access to access so you can add toure profile picture</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need to access to access so you can add toure profile picture</string>
+	
+
 </dict>
 </plist>

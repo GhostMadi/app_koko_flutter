@@ -39,7 +39,7 @@ dependencies:
   flutter_card_swiper: ^7.0.0
   equatable: ^2.0.5
   firebase_auth: ^4.17.9
-  firebase_storage: ^11.6.10
+  firebase_storage: ^11.6.11
   cloud_firestore: ^4.15.9
   flutter_bloc: ^8.1.5
   bloc: ^8.1.3
@@ -86,12 +86,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: HonkStyle
+    - family: BungeeShade
       fonts:
-        - asset: assets/fonts/Honk-Regular.ttf
-    - family: RoboStyle
+        - asset: assets/fonts/BungeeShade.ttf
+    - family: Bungee
       fonts:
-        - asset: assets/fonts/robot.ttf
+        - asset: assets/fonts/Bungee.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

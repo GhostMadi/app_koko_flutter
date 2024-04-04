@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_application_2/features/auth/data/models/user.dart';
 import 'package:flutter_application_2/features/auth/data/repository/user_repo.dart';
 import 'package:flutter_application_2/features/auth/domain/enitites/user_entity.dart';
@@ -91,6 +93,22 @@ class FirbaseRepository implements UserRepository {
       auth.currentUser!.uid;
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  @override
+  Future<String> uploadPicture(String file, String userId) async {
+    try {
+      File imageFile = File(file);
+      Reference firbaseStorageRefrance =
+          FirebaseStorage.instance.ref().child('$userId/PP/${userId}_lead');
+      await firbaseStorageRefrance.putFile(imageFile);
+      String url = await firbaseStorageRefrance.getDownloadURL();
+      await userCollection.doc(userId).update({'picture': url});
+      return url;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
     }
   }
 }

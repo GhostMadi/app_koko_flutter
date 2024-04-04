@@ -11,15 +11,14 @@ class GetUserDataBloc extends Bloc<GetUserDataEvent, GetUserDataState> {
   UserRepository userRepository;
   GetUserDataBloc({required UserRepository myUserRepo})
       : userRepository = myUserRepo,
-        super(GetUserDataState()) {
+        super(GetUserDataState.loading()) {
     on<GetUserData>((event, emit) async {
-      emit(GetUserloading());
       try {
         final user = await userRepository.getUserData(event.myUserId);
 
-        emit(GetUserSuccess(myUser: user));
+        emit(GetUserDataState.success(user));
       } catch (e) {
-        emit(GetUserFailure());
+        emit(GetUserDataState.failur());
         log(e.toString());
       }
     });

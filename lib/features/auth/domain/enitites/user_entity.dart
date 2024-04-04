@@ -10,9 +10,11 @@ class MyUserEntity extends Equatable {
   final String majore;
   final String gpa;
   final String userId;
+  String? picture;
 
-  const MyUserEntity(
+  MyUserEntity(
       {required this.name,
+      required this.picture,
       required this.gmail,
       required this.age,
       required this.gender,
@@ -23,6 +25,7 @@ class MyUserEntity extends Equatable {
 
   Map<String, Object?> toDocument() {
     return {
+      'picture': picture,
       'name': name,
       'age': age,
       'gender': gender,
@@ -31,13 +34,13 @@ class MyUserEntity extends Equatable {
       'gpa': gpa,
       'userId': userId,
       'gmail': gmail,
-
     };
   }
 
   static MyUserEntity fromDocument(Map<String, dynamic> map) {
     return MyUserEntity(
-      gmail:map['gmail'],
+      picture: map['picture'],
+      gmail: map['gmail'],
       name: map['name'],
       age: map['age'],
       gender: map['gender'],
@@ -49,5 +52,6 @@ class MyUserEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [gmail,name,age,gender,school,majore,gpa,userId];
+  List<Object?> get props =>
+      [gmail, name, age, gender, school, majore, gpa, userId, picture];
 }

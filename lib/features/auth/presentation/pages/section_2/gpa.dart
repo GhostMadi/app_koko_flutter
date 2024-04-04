@@ -9,7 +9,21 @@ class GpaWidget extends StatefulWidget {
   State<GpaWidget> createState() => _GpaWidgetState();
 }
 
-final List<double> gpa = [1, 1.5, 2, 2.5, 2.7, 2.9, 3, 3.3, 3.5, 3.7, 3.8, 4];
+final List<double> gpa = [
+  1.5,
+  2,
+  2.5,
+  2.7,
+  2.8,
+  2.9,
+  3,
+  3.1,
+  3.3,
+  3.5,
+  3.7,
+  3.8,
+  4
+];
 double? selected;
 
 class _GpaWidgetState extends State<GpaWidget> {
@@ -34,7 +48,6 @@ class _GpaWidgetState extends State<GpaWidget> {
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 3),
                     borderRadius: BorderRadius.circular(5),
                     color: selected == gpa[index] ? Colors.white : Colors.black,
                   ),
@@ -43,6 +56,7 @@ class _GpaWidgetState extends State<GpaWidget> {
                     child: Text(
                       '${gpa[index]}',
                       style: TextStyle(
+                          fontFamily: 'Bungee',
                           color: selected == gpa[index]
                               ? Colors.black
                               : Colors.white),

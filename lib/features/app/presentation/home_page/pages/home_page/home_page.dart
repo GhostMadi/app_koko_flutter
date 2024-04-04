@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/constants/text_style.dart';
 import 'package:flutter_application_2/features/app/presentation/home_page/pages/individual_page/individual_page.dart';
 import 'package:flutter_application_2/features/app/presentation/home_page/pages/search/search.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/authentication/authentication_bloc.dart';
@@ -27,19 +26,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text(
-          'CoCa',
-          style: customIconStyle,
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [pages[currenIndex]],
-        ),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: CustomScrollView(
+        slivers: [
+          const SliverAppBar(
+            backgroundColor: Colors.black,
+            title: Text(
+              'KOKO',
+              style: TextStyle(
+                  fontFamily: 'BungeeShade', color: Colors.white, fontSize: 40),
+            ),
+          ),
+          SliverToBoxAdapter(child: pages[currenIndex])
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
           onTap: (int index) {

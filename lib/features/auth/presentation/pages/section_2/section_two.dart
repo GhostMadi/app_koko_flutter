@@ -48,6 +48,7 @@ class _SectionTwoState extends State<SectionTwo> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.black,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);

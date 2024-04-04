@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/constants/text_style.dart';
 import 'package:flutter_application_2/features/auth/presentation/bloc/get_user_data/bloc/get_user_data_bloc.dart';
-import 'package:flutter_application_2/features/auth/presentation/widgets/circle.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IndividData extends StatefulWidget {
@@ -11,102 +9,55 @@ class IndividData extends StatefulWidget {
   State<IndividData> createState() => _IndividDataState();
 }
 
-late final user;
+TextStyle dataStyle =
+    const TextStyle(fontFamily: 'Bungee', fontSize: 30, color: Colors.white);
 
 class _IndividDataState extends State<IndividData> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: BlocBuilder<GetUserDataBloc, GetUserDataState>(
-        builder: (context, state) {
-          if (state is GetUserloading) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "Name: ", style: customStyleText),
-                  TextSpan(text: '...', style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "Age: ", style: customStyleText),
-                  TextSpan(text: '...', style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "Gender: ", style: customStyleText),
-                  TextSpan(text: '...', style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "School: ", style: customStyleText),
-                  TextSpan(text: '...', style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "Majore: ", style: customStyleText),
-                  TextSpan(text: '...', style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "GPA: ", style: customStyleText),
-                  TextSpan(text: '...', style: customStyleData)
-                ])),
-              ],
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        width: size.width,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15), color: Colors.black),
+        child: BlocBuilder<GetUserDataBloc, GetUserDataState>(
+          builder: (context, state) {
+            if (state.status == GetUserStatus.success) {
+              final map = state.myUser!;
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Name:${map.name}', style: dataStyle),
+                    Text('Age:${map.age}', style: dataStyle),
+                    Text('Gender:${map.gender}', style: dataStyle),
+                    Text('School:${map.school}', style: dataStyle),
+                    Text('Majore:${map.majore}', style: dataStyle),
+                    Text('GPA:${map.gpa}', style: dataStyle),
+                  ],
+                ),
+              );
+            } else if (state.status == GetUserStatus.loading) {
+              return SizedBox(
+                height: size.height / 3,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Loading...', style: dataStyle),
+                ),
+              );
+            }
+            return SizedBox(
+              height: size.height / 3,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Error...', style: dataStyle),
+              ),
             );
-          } else if (state is GetUserSuccess) {
-            final map = state.myUser;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "Name:", style: customStyleText),
-                  TextSpan(text: map.name.toUpperCase(), style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "Age:", style: customStyleText),
-                  TextSpan(text: map.age.toUpperCase(), style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "Gender:", style: customStyleText),
-                  TextSpan(
-                      text: map.gender.toUpperCase(), style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "School:", style: customStyleText),
-                  TextSpan(
-                      text: map.school.toUpperCase(), style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "Majore:", style: customStyleText),
-                  TextSpan(
-                      text: map.majore.toUpperCase(), style: customStyleData)
-                ])),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: "GPA:", style: customStyleText),
-                  TextSpan(text: map.gpa.toUpperCase(), style: customStyleData)
-                ])),
-              ],
-            );
-          } else {
-            return Column(
-              children: [
-                Text('Name', style: customStyleText),
-                Text('Name', style: customStyleText),
-                Text('Name', style: customStyleText),
-                Text('Name', style: customStyleText),
-              ],
-            );
-          }
-        },
+          },
+        ),
       ),
     );
   }

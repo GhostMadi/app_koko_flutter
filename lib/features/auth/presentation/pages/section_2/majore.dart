@@ -61,7 +61,6 @@ class _MajoresSelectState extends State<MajoresSelect> {
                 child: Container(
                   height: size.height / 12,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 1),
                       borderRadius: BorderRadius.circular(11),
                       color: selected == majore[index]
                           ? Colors.white
@@ -72,6 +71,7 @@ class _MajoresSelectState extends State<MajoresSelect> {
                         child: Text(
                       majore[index],
                       style: TextStyle(
+                          fontFamily: 'Bungee',
                           color: selected == majore[index]
                               ? Colors.black
                               : Colors.white),

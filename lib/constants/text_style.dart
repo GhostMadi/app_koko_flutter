@@ -6,4 +6,4 @@ TextStyle customStyleText =
     const TextStyle(fontSize: 30, color: Colors.grey, fontFamily: 'RoboStyle');
 
 TextStyle customIconStyle =
-    const TextStyle(fontSize: 65, fontFamily: 'HonkStyle');
+    const TextStyle(fontSize: 65, fontFamily: 'BungeeShade');

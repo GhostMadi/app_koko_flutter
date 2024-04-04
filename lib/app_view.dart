@@ -16,11 +16,7 @@ class AppView extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           colorScheme: const ColorScheme.light(
-        background: Colors.grey,
-        surface: Colors.black,
-        error: Colors.red,
-        onPrimary: Colors.black,
-        onSecondary: Colors.white,
+        background: Color(0xffFFBE00),
       )),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {

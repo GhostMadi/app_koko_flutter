@@ -38,13 +38,12 @@ class _GenderSelectState extends State<GenderSelect> {
                       color: selected == genders[index]
                           ? Colors.white
                           : Colors.black,
-                      border: Border.all(color: Colors.black, width: 3),
                       borderRadius: BorderRadius.circular(11)),
                   child: Center(
                     child: Text(
                       genders[index],
                       style: TextStyle(
-                          fontFamily: 'RoboStyle',
+                          fontFamily: 'BungeeShade',
                           color: selected == genders[index]
                               ? Colors.black
                               : Colors.white),

@@ -1,13 +1,14 @@
 part of 'get_user_data_bloc.dart';
 
-class GetUserDataState {}
+enum GetUserStatus { success, loading, failure }
 
-// ignore: must_be_immutable
-class GetUserSuccess extends GetUserDataState {
-  MyUser myUser;
-  GetUserSuccess({required this.myUser});
+class GetUserDataState {
+  GetUserStatus status;
+  MyUser? myUser;
+  GetUserDataState._({this.myUser, this.status = GetUserStatus.failure});
+
+  GetUserDataState.success(MyUser user)
+      : this._(status: GetUserStatus.success, myUser: user);
+  GetUserDataState.failur() : this._(status: GetUserStatus.failure);
+  GetUserDataState.loading() : this._(status: GetUserStatus.loading);
 }
-
-class GetUserloading extends GetUserDataState {}
-
-class GetUserFailure extends GetUserDataState {}

@@ -33,7 +33,7 @@ class _SchoolSelectState extends State<SchoolSelect> {
                 padding: const EdgeInsets.symmetric(horizontal: 2),
                 child: Container(
                   height: size.height / 12,
-                  width: size.width / 4.5,
+                  width: size.width / 4.4,
                   decoration: BoxDecoration(
                       color: selected == schools[index]
                           ? Colors.white
@@ -43,6 +43,7 @@ class _SchoolSelectState extends State<SchoolSelect> {
                     child: Text(
                       schools[index],
                       style: TextStyle(
+                          fontFamily: 'Bungee',
                           color: selected == schools[index]
                               ? Colors.black
                               : Colors.white),

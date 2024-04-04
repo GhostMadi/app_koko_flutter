@@ -9,10 +9,13 @@ class MyUser extends Equatable {
   final String school;
   final String majore;
   final String gpa;
-  final String userId;
 
-  const MyUser(
+  final String userId;
+  String? picture;
+
+  MyUser(
       {required this.name,
+      required this.picture,
       required this.gmail,
       required this.age,
       required this.gender,
@@ -21,7 +24,8 @@ class MyUser extends Equatable {
       required this.gpa,
       required this.userId});
 
-  static const empty = MyUser(
+  static final empty = MyUser(
+    picture: '',
     gmail: ' ',
     name: ' ',
     age: ' ',
@@ -33,6 +37,7 @@ class MyUser extends Equatable {
   );
 
   MyUser copyWith({
+    final String? picture,
     final String? gmail,
     final String? name,
     final String? age,
@@ -43,6 +48,7 @@ class MyUser extends Equatable {
     final String? userId,
   }) {
     return MyUser(
+        picture: picture ?? this.picture,
         gmail: gmail ?? this.gmail,
         name: name ?? this.name,
         age: age ?? this.age,
@@ -55,6 +61,7 @@ class MyUser extends Equatable {
 
   MyUserEntity toEntity() {
     return MyUserEntity(
+        picture: picture!,
         gmail: gmail,
         name: name,
         age: age,
@@ -67,6 +74,7 @@ class MyUser extends Equatable {
 
   static MyUser fromEntity(MyUserEntity entity) {
     return MyUser(
+      picture: entity.picture,
       gmail: entity.gmail,
       name: entity.name,
       age: entity.age,
@@ -79,5 +87,6 @@ class MyUser extends Equatable {
   }
 
   @override
-  List<Object?> get props => [gmail, name, age, gender, school, majore, gpa];
+  List<Object?> get props =>
+      [picture, gmail, name, age, gender, school, majore, gpa];
 }

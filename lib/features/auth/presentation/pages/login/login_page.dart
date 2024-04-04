@@ -24,6 +24,8 @@ final passwordController = TextEditingController();
 bool isRequired = false;
 bool errorComment = false;
 bool signUpFailure = true;
+bool isAccepted = true;
+String error = '';
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -38,9 +40,9 @@ class _LoginPageState extends State<LoginPage> {
             });
           } else if (state is SignInFailure) {
             setState(() {
-              signUpFailure = false;
-              passwordController.clear();
               isRequired = false;
+              isAccepted = false;
+              error = 'incorrect password or gmail';
             });
           } else if (state is SignInProcess) {
             setState(() {
@@ -52,24 +54,31 @@ class _LoginPageState extends State<LoginPage> {
           key: keyForm,
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('CoCo', style: customIconStyle),
+                    Text('KOKO', style: customIconStyle),
+                    const Text('login',
+                        style: TextStyle(fontFamily: 'BungeeShade')),
+                    const SizedBox(height: 15),
                     CustomTextField(
                       controller: emailController,
                       labelText: 'email',
                       obsecure: false,
                       keyBoardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value!.isEmpty &&
-                            !emailRegExp.hasMatch(value) &&
-                            errorComment) {
-                          return 'error';
-                        } else if (!signUpFailure) {
-                          return 'error';
+                      validator: (email) {
+                        if (email!.isEmpty) {
+                          setState(() {
+                            isAccepted = false;
+                            error = 'fill the gap';
+                          });
+                        } else if (!emailRegExp.hasMatch(email)) {
+                          setState(() {
+                            isAccepted = false;
+                            error = 'wrong gmail';
+                          });
                         }
                         return null;
                       },
@@ -80,34 +89,48 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: 'password',
                       obsecure: true,
                       keyBoardType: TextInputType.text,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'error';
-                        } else if (value.length < 6) {
-                          return "at least 6 characters";
-                        } else if (!signUpFailure) {
-                          return 'error';
+                      validator: (password) {
+                        if (password!.isEmpty) {
+                          setState(() {
+                            isAccepted = false;
+                            error = 'fill the gap';
+                          });
+                          return '';
+                        } else if (password.length < 5) {
+                          setState(() {
+                            isAccepted = false;
+                            error = 'at least 6 characters';
+                            passwordController.clear();
+                          });
                         }
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
+                    isAccepted
+                        ? const SizedBox()
+                        : Container(
+                            height: MediaQuery.of(context).size.height / 11.5,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: const Color(0xffFF666A),
+                            ),
+                            child: Center(
+                              child: Text(
+                                error,
+                                style: const TextStyle(
+                                    fontFamily: 'Bungee', color: Colors.white),
+                              ),
+                            )),
+                    const SizedBox(height: 10),
                     !isRequired
                         ? CustomButton(
-                            buttonText: 'sign In',
+                            buttonText: 'start',
                             onTap: () {
-                              if (keyForm.currentState!.validate()) {
-                                try {
-                                  context.read<SignInBloc>().add(
-                                        SignInRequired(
-                                            email: emailController.text.trim(),
-                                            password:
-                                                passwordController.text.trim()),
-                                      );
-                                } catch (e) {
-                                  errorComment = true;
-                                }
-                              }
+                              context.read<SignInBloc>().add(SignInRequired(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim()));
                             })
                         : const CircleCustome(),
                     const SizedBox(height: 20),
@@ -126,10 +149,24 @@ class _LoginPageState extends State<LoginPage> {
                                       )));
                         },
                         child: const Text(
-                          'Sign up?',
+                          'registrate',
                           style: TextStyle(
-                              color: Colors.white, fontFamily: 'RoboStyle'),
+                              fontSize: 20, fontFamily: 'BungeeShade'),
                         )),
+                    const Text(
+                      'or',
+                      style: TextStyle(fontFamily: 'BungeeShade'),
+                    ),
+                    const Text(
+                      'reset password',
+                      style: TextStyle(fontSize: 20, fontFamily: 'BungeeShade'),
+                    ),
+                    const SizedBox(height: 60),
+                    const Text(
+                      '2024',
+                      style: TextStyle(
+                          color: Colors.white, fontFamily: 'BungeeShade'),
+                    ),
                   ],
                 ),
               ),
